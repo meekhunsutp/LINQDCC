@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,16 +11,16 @@ namespace PracticeProblemsLINQ
     {
         //Weighted project points: /10
         //Project points: /25
-       
+
         #region Problem 1 
         //(5 points) Problem 1
         //Using LINQ, write a method that takes in a list of strings and returns all words that contain the substring “th” from a list.
         public static List<string> RunProblem1(List<string> words)
         {
             //code
-
+            var wordsWithTH = words.Where(w => w.Contains("th")).ToList();
             //return
-
+            return wordsWithTH;
         }
         #endregion
 
@@ -29,9 +30,9 @@ namespace PracticeProblemsLINQ
         public static List<string> RunProblem2(List<string> names)
         {
             //code
-
+            var dupeLessString = names.Distinct().ToList();
             //return
-
+            return dupeLessString;
         }
         #endregion
 
@@ -41,9 +42,9 @@ namespace PracticeProblemsLINQ
         public static Customer RunProblem3(List<Customer> customers)
         {
             //code
-
+            var findMike = customers.Where(c => c.FirstName == "Mike").First();
             //return
-
+            return findMike;
         }
         #endregion
 
@@ -54,9 +55,9 @@ namespace PracticeProblemsLINQ
         public static Customer RunProblem4(List<Customer> customers)
         {
             //code
-
+            var find3AndUpdate = customers.Where(c => c.Id == 3).Select(c => { c.FirstName = "Bob"; c.LastName = "Dylan"; return c; }).First();
             //return
-
+            return find3AndUpdate;
         }
         #endregion
 
@@ -69,9 +70,9 @@ namespace PracticeProblemsLINQ
         public static double RunProblem5(List<string> classGrades)
         {
             //code
-
+            var gradeAverage = classGrades.Average(c => c.Split(',').Select(double.Parse).OrderBy(x => x).Skip(1).Average());
             //return
-
+            return gradeAverage;
         }
         #endregion
 
@@ -82,9 +83,22 @@ namespace PracticeProblemsLINQ
         public static string RunBonusProblem1(string word)
         {
             //code
-
+            string orderedFrequencyString = null;
+            var numbers = new List<int>();
+            var letters = word.ToUpper().OrderBy(x => x).Distinct().ToList();
+            foreach (var letter in word)
+            {
+                numbers.Add(word.Where(x => x.Equals(letter)).Count());
+            }
+            for (int i = 0; i < letters.Count; i++)
+            {
+                orderedFrequencyString += letters[i];
+                orderedFrequencyString += numbers[i];
+            }
             //return
-
+            Console.WriteLine(orderedFrequencyString);
+            Console.ReadLine();
+            return orderedFrequencyString;
         }
         #endregion
     }
